@@ -1,12 +1,33 @@
-import cv2
+import argparse
 import torch
 import torch.nn as nn
-import torchvision
-from torch.utils.data import DataLoader
+
+from constants import Constants, HyperParams, PathConstants
+from data.prepare import DataPreparation
+from factory.model_factory import ModelFactory
+from training import ModelTraining
 
 if __name__=='__main__':
-    train_ds = torchvision.datasets.MNIST(
-        root="data",
-        train=True,
-        download=False
-    )
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--model_type',type=str,default='mlp',choices=['mlp','lenet'],help='type of model to run on')
+    parser.add_argument('--epochs',type=int,default=10,help='number of epochs to train for')
+    args = parser.parse_args()
+
+    model_type = args.model_type
+    epochs = args.epochs
+
+    data_prep = DataPreparation()
+    train_loader, val_loader, test_loader = data_prep.prepare()
+
+    model_factory = ModelFactory()
+    model = model_factory.select(args.model_type)
+
+    training = ModelTraining(
+        model=model,
+        train_loader=train_loader,
+        val_loader=val_loader)
+    hist = training.train(epochs=epochs)
+    print(hist)
+
+    torch.save(model.state_dict(),PathConstants.MODEL_PATH)
+
