@@ -1,2 +1,5 @@
-data
+ref
 .DS_Store
+**/__pycache__
+out
+data/MNIST
