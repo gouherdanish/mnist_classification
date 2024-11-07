@@ -8,7 +8,7 @@ class MLP(nn.Module):
         self.image_pixels = Constants.IMAGE_SIZE[0]*Constants.IMAGE_SIZE[1]
         self.fc1 = nn.Linear(self.image_pixels, ModelParams.FC1_NEURONS)
         self.relu = nn.ReLU()
-        self.output = nn.Linear(ModelParams.FC2_NEURONS, ModelParams.OUTPUT_CLASSES)
+        self.output = nn.Linear(ModelParams.FC1_NEURONS, ModelParams.OUTPUT_CLASSES)
     
     def forward(self, x):
         x = x.view(-1,self.image_pixels)
