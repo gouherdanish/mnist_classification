@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from constants import Constants, HyperParams
+from utils import Utils
 
 class ModelTraining:
     def __init__(
@@ -48,6 +49,7 @@ class ModelTraining:
                 count+=len(y)
         return total_loss.item()/count, acc.item()/count
 
+    @Utils.timeit
     def train(self,epochs):
         res = {
             'train_loss':[],
