@@ -3,27 +3,14 @@ import torch.nn as nn
 import torchvision 
 
 from constants import Constants, HyperParams
+from base_prepare import DataPreparation
 
-class DataPreparation:
-    def __init__(self) -> None:
-        self.transform = torchvision.transforms.Compose([
-            torchvision.transforms.ToTensor(),
-            torchvision.transforms.Normalize((0.5),(0.5))
-        ])
-        self._load_data()
-        self._split_data()
-
+class TrainingDataPreparation(DataPreparation):
     def _load_data(self):
         self.train_ds = torchvision.datasets.MNIST(
             root="data",
             train=True,
-            download=False,
-            transform=self.transform
-        )
-        self.test_ds = torchvision.datasets.MNIST(
-            root="data",
-            train=False,
-            download=False,
+            download=True,
             transform=self.transform
         )
     
@@ -34,6 +21,8 @@ class DataPreparation:
         self.train_ds, self.valid_ds = torch.utils.data.random_split(self.train_ds,(train_size,val_size))
 
     def prepare(self):
+        self._load_data()
+        self._split_data()
         train_loader = torch.utils.data.DataLoader(
             dataset=self.train_ds, 
             shuffle=True, 
@@ -42,8 +31,4 @@ class DataPreparation:
             dataset=self.valid_ds, 
             shuffle=False, 
             batch_size=HyperParams.BATCH_SIZE)
-        test_loader = torch.utils.data.DataLoader(
-            dataset=self.test_ds, 
-            shuffle=False, 
-            batch_size=HyperParams.BATCH_SIZE)
-        return train_loader, val_loader, test_loader
+        return train_loader, val_loader
