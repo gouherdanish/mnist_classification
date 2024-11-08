@@ -6,6 +6,6 @@ class Utils:
             start = time.time()
             res = func(*args,**kwargs)
             end = time.time()
-            print(f"Elapsed Time: {(end-start):.0f}s")
+            print(f"Elapsed Time: {(end-start):.4f}s")
             return res
         return inner
