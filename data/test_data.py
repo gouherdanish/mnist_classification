@@ -3,7 +3,7 @@ import torch.nn as nn
 import torchvision 
 
 from constants import Constants, HyperParams
-from base_prepare import DataPreparation
+from data.base_prepare import DataPreparation
 
 class TestDataPreparation(DataPreparation):
     def _load_data(self):
