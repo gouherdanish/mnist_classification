@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 
 from constants import Constants, HyperParams, PathConstants
-from data.prepare import DataPreparation
+from data.training_data import TrainingDataPreparation
 from factory.model_factory import ModelFactory
 from training import ModelTraining
 
@@ -16,11 +16,11 @@ if __name__=='__main__':
     model_type = args.model_type
     epochs = args.epochs
 
-    data_prep = DataPreparation()
-    train_loader, val_loader, test_loader = data_prep.prepare()
+    data_prep = TrainingDataPreparation()
+    train_loader, val_loader = data_prep.prepare()
 
     model_factory = ModelFactory()
-    model = model_factory.select(args.model_type)
+    model = model_factory.select(model_type)
 
     training = ModelTraining(
         model=model,
