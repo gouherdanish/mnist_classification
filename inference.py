@@ -21,7 +21,7 @@ class ModelInference:
             acc = (y==pred).sum()
         return acc.item()/len(y)
 
-    def infer(self):
+    def infer(self)->dict:
         res = {
             'test_acc':[],
         }
