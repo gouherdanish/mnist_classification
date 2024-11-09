@@ -25,4 +25,5 @@ if __name__=='__main__':
     inferencing = ModelInference(model=model,test_loader=test_loader)
     hist = inferencing.infer()
     print(hist)
+    print(sum(hist['test_acc'])/len(hist['test_acc']))
 
