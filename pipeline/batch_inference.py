@@ -10,7 +10,6 @@ class BatchInference:
         ):
         self.model = model
 
-    @Utils.timeit
     def _infer_batch(self, X, y):
         self.model.eval() # set to evaluation mode
         with torch.no_grad():
