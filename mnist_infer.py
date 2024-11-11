@@ -4,14 +4,14 @@ from torchsummary import summary
 
 from constants import PathConstants
 from factory.model_factory import ModelFactory
-from data.test_data_prep_batch import BatchTestDataPreparation
-from data.test_data_prep_incremental import IncrementalTestDataPreparation
-from model.batch_inference import BatchInference
-from model.incremental_inference import IncrementalInference
+from prep.test_data_prep_batch import BatchTestDataPreparation
+from prep.test_data_prep_incremental import IncrementalTestDataPreparation
+from pipeline.batch_inference import BatchInference
+from pipeline.incremental_inference import IncrementalInference
 from utils import Utils
 
 @Utils.timeit
-def run_pipeline(args):
+def run(args):
     model_type = args.model_type
     inference_strategy = args.inference_strategy
     test_image_path = args.test_image_path
@@ -41,5 +41,5 @@ if __name__=='__main__':
     parser.add_argument('--test_image_path',type=str,default='',help='path of test image in case of incremental inference')
     args = parser.parse_args()
 
-    run_pipeline(args)
+    run(args)
 
