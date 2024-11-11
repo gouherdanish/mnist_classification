@@ -1,9 +1,9 @@
 import torch
-import torch.nn as nn
 import torchvision 
 
-from constants import Constants, HyperParams
-from data.base_prepare import DataPreparation
+from constants import HyperParams
+from prep.base_prepare import DataPreparation
+from data.batch_data import BatchData
 
 class BatchTestDataPreparation(DataPreparation):
     def __init__(self) -> None:
@@ -13,12 +13,7 @@ class BatchTestDataPreparation(DataPreparation):
         ])
         
     def _load_data(self):
-        self.test_ds = torchvision.datasets.MNIST(
-            root="data",
-            train=False,
-            download=False,
-            transform=self.transform
-        )
+        self.test_ds = BatchData(train=False).load()
 
     def prepare(self):
         self._load_data()

@@ -1,18 +1,13 @@
 import torch
-import torch.nn as nn
 import torchvision 
 
 from constants import Constants, HyperParams
-from data.base_prepare import DataPreparation
+from prep.base_prepare import DataPreparation
+from data.batch_data import BatchData
 
 class BatchTrainingDataPreparation(DataPreparation):
     def _load_data(self):
-        self.train_ds = torchvision.datasets.MNIST(
-            root="data",
-            train=True,
-            download=True,
-            transform=self.transform
-        )
+        self.train_ds = BatchData(train=True).load()
     
     def _split_data(self):
         validation_split_frac = Constants.VALIDATION_SPLIT_FRAC
