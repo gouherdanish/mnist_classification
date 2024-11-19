@@ -7,7 +7,14 @@ from data.batch_data import BatchData
 
 class BatchTrainingDataPreparation(DataPreparation):
     def _load_data(self):
-        self.train_ds = BatchData(train=True).load()
+        self.transform = torchvision.transforms.Compose([
+            torchvision.transforms.ToTensor(),
+            torchvision.transforms.Normalize((0.5),(0.5))
+        ])
+        self.train_ds = BatchData(
+            train=True,
+            transform=self.transform
+        ).load()
     
     def _split_data(self):
         validation_split_frac = Constants.VALIDATION_SPLIT_FRAC

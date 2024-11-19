@@ -13,7 +13,10 @@ class BatchTestDataPreparation(DataPreparation):
         ])
         
     def _load_data(self):
-        self.test_ds = BatchData(train=False).load()
+        self.test_ds = BatchData(
+            train=False,
+            transform=self.transform
+        ).load()
 
     def prepare(self):
         self._load_data()
