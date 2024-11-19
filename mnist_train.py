@@ -4,7 +4,7 @@ import torch
 from constants import PathConstants
 from prep.training_data_prep_batch import BatchTrainingDataPreparation
 from factory.model_factory import ModelFactory
-from pipeline.training import ModelTraining
+from factory.training import ModelTraining
 
 def run(args):
     model_type = args.model_type
