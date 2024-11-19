@@ -1,5 +1,5 @@
 import torch.nn as nn
-from arch.mlp import MLP
+from model.mlp import MLP
 
 class ModelFactory:
     model_registry = {
