@@ -2,4 +2,4 @@ ref
 .DS_Store
 **/__pycache__
 out
-prep/MNIST
+data/MNIST
