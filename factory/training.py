@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from constants import Constants, HyperParams
+from constants import HyperParams
 from utils import Utils
 
 class ModelTraining:

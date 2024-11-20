@@ -1,9 +1,11 @@
 import torch.nn as nn
 from model.mlp import MLP
+from model.lenet import LeNet
 
 class ModelFactory:
     model_registry = {
-        'mlp': MLP
+        'mlp': MLP,
+        'lenet': LeNet
     }
 
     def select(self,model: str) -> nn.Module:
