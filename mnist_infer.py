@@ -13,13 +13,13 @@ from utils import Utils
 @Utils.timeit
 def run(args):
     print(args)
-    model_type = args.model_type
+    model_name = args.model_name
     test_image_path = args.test_image_path
     inference_strategy = 'incremental' if test_image_path != '' else 'batch'
 
     model_factory = ModelFactory()
-    model = model_factory.select(model_type)
-    state_dict = torch.load(PathConstants.MODEL_PATH, weights_only=True)
+    model = model_factory.select(model_name)
+    state_dict = torch.load(PathConstants.MODEL_PATH(model_name), weights_only=True)
     model.load_state_dict(state_dict)
 
     inferencing = InferenceFactory.get(inference_strategy,model=model)
@@ -37,7 +37,7 @@ def run(args):
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_type',type=str,default='mlp',choices=['mlp','lenet'],help='type of model to run on')
+    parser.add_argument('--model_name',type=str,default='mlp',choices=['mlp','lenet'],help='type of model to run on')
     parser.add_argument('--test_image_path',type=str,default='',help='path of test image in case of incremental inference')
     args = parser.parse_args()
 
