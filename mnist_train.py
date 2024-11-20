@@ -7,14 +7,14 @@ from factory.model_factory import ModelFactory
 from factory.training import ModelTraining
 
 def run(args):
-    model_type = args.model_type
+    model_name = args.model_name
     epochs = args.epochs
 
     data_prep = BatchTrainingDataPreparation()
     train_loader, val_loader = data_prep.prepare()
 
     model_factory = ModelFactory()
-    model = model_factory.select(model_type)
+    model = model_factory.select(model_name)
 
     training = ModelTraining(
         model=model,
@@ -23,11 +23,11 @@ def run(args):
     hist = training.train(epochs=epochs)
     print(hist)
 
-    torch.save(model.state_dict(),PathConstants.MODEL_PATH)
+    torch.save(model.state_dict(),PathConstants.MODEL_PATH(model_name))
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_type',type=str,default='mlp',choices=['mlp','lenet'],help='type of model to run on')
+    parser.add_argument('--model_name',type=str,default='mlp',choices=['mlp','lenet'],help='type of model to run on')
     parser.add_argument('--epochs',type=int,default=10,help='number of epochs to train for')
     args = parser.parse_args()
 
