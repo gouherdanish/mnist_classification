@@ -1,16 +1,16 @@
 import torch.nn as nn
+import torch.nn.functional as F
 
-from constants import Constants, ModelParams
+from constants import DataConstants, MLPModelParams
 
 class MLP(nn.Module):
     def __init__(self):
         super(MLP,self).__init__()
-        self.image_pixels = Constants.IMAGE_SIZE[0]*Constants.IMAGE_SIZE[1]
-        self.fc1 = nn.Linear(self.image_pixels, ModelParams.FC1_NEURONS)
-        self.relu = nn.ReLU()
-        self.output = nn.Linear(ModelParams.FC1_NEURONS, ModelParams.OUTPUT_CLASSES)
+        self.image_pixels = DataConstants.IMAGE_SIZE[0]*DataConstants.IMAGE_SIZE[1]
+        self.fc1 = nn.Linear(self.image_pixels, MLPModelParams.NEURONS_FC1)
+        self.fc2 = nn.Linear(MLPModelParams.NEURONS_FC1, DataConstants.OUTPUT_CLASSES)
     
     def forward(self, x):
         x = x.view(-1,self.image_pixels)
-        x = self.relu(self.fc1(x))
-        return self.output(x)
+        x = F.relu(self.fc1(x))
+        return self.fc2(x)
