@@ -1,7 +1,7 @@
 import torch
 import torchvision 
 
-from constants import Constants, HyperParams
+from constants import DataConstants, HyperParams
 from prep.base_prepare import DataPreparation
 from data.batch_data import BatchData
 
@@ -17,7 +17,7 @@ class BatchTrainingDataPreparation(DataPreparation):
         ).load()
     
     def _split_data(self):
-        validation_split_frac = Constants.VALIDATION_SPLIT_FRAC
+        validation_split_frac = DataConstants.VALIDATION_SPLIT_FRAC
         val_size = int(validation_split_frac * len(self.train_ds))
         train_size = len(self.train_ds) - val_size
         self.train_ds, self.valid_ds = torch.utils.data.random_split(self.train_ds,(train_size,val_size))
