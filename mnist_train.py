@@ -6,6 +6,7 @@ from prep.training_data_prep_batch import BatchTrainingDataPreparation
 from factory.model_factory import ModelFactory
 from factory.training import ModelTraining
 
+
 def run(args):
     model_name = args.model_name
     epochs = args.epochs
@@ -21,6 +22,7 @@ def run(args):
         train_loader=train_loader,
         val_loader=val_loader)
     hist = training.train(epochs=epochs)
+
     print(hist)
 
     torch.save(model.state_dict(),PathConstants.MODEL_PATH(model_name))
