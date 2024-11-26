@@ -8,6 +8,7 @@ from factory.model_factory import ModelFactory
 from factory.inference_factory import InferenceFactory
 from prep.test_data_prep_batch import BatchTestDataPreparation
 from prep.test_data_prep_incremental import IncrementalTestDataPreparation
+from eval.evaluate import ModelEvaluator
 from utils import Utils
 
 @Utils.timeit
@@ -21,6 +22,10 @@ def run(args):
     model = model_factory.select(model_name)
     state_dict = torch.load(PathConstants.MODEL_PATH(model_name), weights_only=True)
     model.load_state_dict(state_dict)
+
+    evaluator = ModelEvaluator()
+    eval_result = evaluator.evaluate(model)
+    print(eval_result)
 
     inferencing = InferenceFactory.get(inference_strategy,model=model)
     if inference_strategy == 'incremental':
