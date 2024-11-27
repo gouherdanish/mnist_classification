@@ -19,16 +19,16 @@ class IncrementalTestDataPreparation(DataPreparation):
             torchvision.transforms.Normalize((0.5), (0.5))
         ])
 
-    def _load_data(self):
-        self.test_ds = IncrementalDataset(
-            image_path=self.test_image_path,
+    def _load_data(self,test_image_path):
+        return IncrementalDataset(
+            image_path=test_image_path,
             transform=self.transform
         )
 
-    def prepare(self):
-        self._load_data()
+    def prepare(self,**kwargs):
+        test_ds = self._load_data(test_image_path=kwargs['test_image_path'])
         test_loader = torch.utils.data.DataLoader(
-            dataset=self.test_ds, 
+            dataset=test_ds, 
             shuffle=False, 
             batch_size=1)
         return test_loader

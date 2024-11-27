@@ -13,15 +13,15 @@ class BatchTestDataPreparation(DataPreparation):
         ])
         
     def _load_data(self):
-        self.test_ds = BatchData(
+        return BatchData(
             train=False,
             transform=self.transform
         ).load()
 
     def prepare(self):
-        self._load_data()
+        test_ds = self._load_data()
         test_loader = torch.utils.data.DataLoader(
-            dataset=self.test_ds, 
+            dataset=test_ds, 
             shuffle=False, 
             batch_size=HyperParams.BATCH_SIZE)
         return test_loader
