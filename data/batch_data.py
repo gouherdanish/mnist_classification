@@ -1,22 +1,18 @@
 import torchvision 
 
 class BatchData:
-    def __init__(self,train=True,transform=None) -> None:
-        self.train=train
-        self.transform=transform
+    def __init__(self,train=True,download=False) -> None:
+        self.train = train
+        self.download = download
+        self.transform = torchvision.transforms.Compose([
+            torchvision.transforms.ToTensor(),
+            torchvision.transforms.Normalize((0.5),(0.5))
+        ])
 
     def load(self):
-        if self.train:
-            return torchvision.datasets.MNIST(
-                root="data",
-                train=True,
-                download=True,
-                transform=self.transform
-            )
-        else:
-            return torchvision.datasets.MNIST(
-                root="data",
-                train=False,
-                download=False,
-                transform=self.transform
-            )
+        return torchvision.datasets.MNIST(
+            root="data",
+            train=self.train,
+            download=self.download,
+            transform=self.transform
+        )
