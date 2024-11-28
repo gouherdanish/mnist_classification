@@ -3,11 +3,7 @@ import torchvision
 
 from prep.base_prepare import DataPreparation
 from data.incremental_data import IncrementalDataset
-
-class InvertIntensity:
-    def __call__(self, image):
-        # Assuming the image is a PyTorch tensor with values in the range [0, 1]
-        return 1 - image
+from custom.transforms import InvertIntensity
 
 class IncrementalTestDataPreparation(DataPreparation):
     def __init__(self,test_image_path) -> None:
