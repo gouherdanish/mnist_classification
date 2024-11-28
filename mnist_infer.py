@@ -6,8 +6,8 @@ from constants import PathConstants
 from factory.data_factory import DataFactory
 from factory.model_factory import ModelFactory
 from factory.inference_factory import InferenceFactory
-from prep.test_data_prep_batch import BatchTestDataPreparation
-from prep.test_data_prep_incremental import IncrementalTestDataPreparation
+from prep.batch_data_prep_test import BatchTestDataPreparation
+from prep.incremental_data_prep import IncrementalDataPreparation
 from eval.evaluate import ModelEvaluator
 from utils import Utils
 
@@ -29,7 +29,7 @@ def run(args):
 
     inferencing = InferenceFactory.get(inference_strategy,model=model)
     if inference_strategy == 'incremental':
-        data_prep = IncrementalTestDataPreparation(test_image_path=test_image_path)
+        data_prep = IncrementalDataPreparation(test_image_path=test_image_path)
         test_loader = data_prep.prepare()
         confidence, pred_label = inferencing.infer(test_loader=test_loader)
         print(confidence, pred_label)

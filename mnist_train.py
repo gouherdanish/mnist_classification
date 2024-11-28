@@ -2,7 +2,7 @@ import argparse
 import torch
 
 from constants import PathConstants
-from prep.training_data_prep_batch import BatchTrainingDataPreparation
+from ml.ml_projects.mnist_classification.prep.batch_data_prep_training import BatchTrainingDataPreparation
 from factory.model_factory import ModelFactory
 from factory.training import ModelTraining
 
