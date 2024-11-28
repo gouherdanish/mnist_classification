@@ -1,13 +1,13 @@
 import torch.nn as nn
-from prep.training_data_prep_batch import BatchTrainingDataPreparation
-from prep.test_data_prep_batch import BatchTestDataPreparation
-from prep.test_data_prep_incremental import IncrementalTestDataPreparation
+from prep.batch_data_prep_training import BatchTrainingDataPreparation
+from prep.batch_data_prep_test import BatchTestDataPreparation
+from prep.incremental_data_prep import IncrementalDataPreparation
 
 class DataFactory:
     data_prep = {
         'batch_train': BatchTrainingDataPreparation,
         'batch_inference': BatchTestDataPreparation,
-        'incremental_inference': IncrementalTestDataPreparation
+        'incremental_inference': IncrementalDataPreparation
     }
 
     def select(self,strategy: str) -> nn.Module:
