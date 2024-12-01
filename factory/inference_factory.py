@@ -48,7 +48,7 @@ class BatchInferenceStrategy(InferenceStrategy):
         return res
     
 @InferenceFactory.register('incremental')
-class IncrementalInference(InferenceStrategy):
+class IncrementalInferenceStrategy(InferenceStrategy):
     def __init__(self,model):
         self.model = model
 
