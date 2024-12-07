@@ -1,3 +1,4 @@
+import torch
 import numpy as np
 from torch.utils.data import Dataset
 
@@ -5,7 +6,7 @@ class SingleDataset(Dataset):
     def __init__(
             self,
             img:np.ndarray,
-            label:str='',
+            label:int,
             transform=None) -> None:
         self.img = img
         self.label = label
@@ -16,5 +17,5 @@ class SingleDataset(Dataset):
     
     def __getitem__(self, index):
         if self.transform: 
-            img = self.transform(img)
-        return img if self.label == '' else img, self.label
+            img = self.transform(self.img)
+        return img, torch.tensor(self.label)
