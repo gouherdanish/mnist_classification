@@ -4,7 +4,7 @@ import torch
 from constants import PathConstants
 from prep.batch_data_prep_training import BatchTrainingDataPreparation
 from factory.model_factory import ModelFactory
-from factory.training import ModelTraining
+from factory.training_factory import TrainingFactory
 
 
 def run(args):
@@ -17,15 +17,16 @@ def run(args):
     model_factory = ModelFactory()
     model = model_factory.select(model_name)
 
-    training = ModelTraining(
+    training = TrainingFactory.get(
+        strategy='batch',
         model=model,
         train_loader=train_loader,
-        val_loader=val_loader)
+        val_loader=val_loader,
+        checkpoint_path=PathConstants.MODEL_PATH(model_name))
     hist = training.train(epochs=epochs)
-
     print(hist)
 
-    torch.save(model.state_dict(),PathConstants.MODEL_PATH(model_name))
+    # torch.save(model.state_dict(),PathConstants.MODEL_PATH(model_name))
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
