@@ -10,14 +10,14 @@ from eval.evaluate import ModelEvaluator
 from utils import Utils
 
 @Utils.timeit
-def run(test_image_path,model_name='lenet'):
+def run(img,model_name='lenet'):
     inference_strategy = 'single'
 
     checkpoint_path = PathConstants.MODEL_PATH(model_name)
     assert Path(checkpoint_path).exists(), f"Path Not Found: {checkpoint_path}"
     checkpoint = torch.load(checkpoint_path, weights_only=True)
 
-    data_prep = SingleDataPreparation(img=test_image_path)
+    data_prep = SingleDataPreparation(img=img)
     test_loader = data_prep.prepare()
 
     model_factory = ModelFactory()
@@ -35,9 +35,10 @@ def run(test_image_path,model_name='lenet'):
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--img',type=str,required=True,help='path of test image in case of incremental inference')
     parser.add_argument('--model_name',type=str,default='lenet',choices=['mlp','lenet'],help='type of model to run on')
-    parser.add_argument('--test_image_path',type=str,default='',help='path of test image in case of incremental inference')
     args = parser.parse_args()
 
-    confidence, pred_label = run(vars(**args))
+    # run(**vars(args))
+    confidence, pred_label = run(**vars(args))
 

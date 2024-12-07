@@ -9,15 +9,15 @@ class InferenceFactory:
     registry = {}
 
     @classmethod
-    def register(cls, method):
+    def register(cls, strategy):
         def inner(wrapped_cls):
-            cls.registry[method] = wrapped_cls
+            cls.registry[strategy] = wrapped_cls
             return wrapped_cls
         return inner
     
     @classmethod
-    def get(cls, method, **kwargs):
-        return cls.registry[method](**kwargs)
+    def get(cls, strategy, **kwargs):
+        return cls.registry[strategy](**kwargs)
     
 
 class InferenceStrategy(ABC):
@@ -47,15 +47,15 @@ class BatchInferenceStrategy(InferenceStrategy):
             res['test_acc'].append(batch_acc)
         return res
     
-@InferenceFactory.register('incremental')
-class IncrementalInferenceStrategy(InferenceStrategy):
+@InferenceFactory.register('single')
+class SingleInferenceStrategy(InferenceStrategy):
     def __init__(self,model):
         self.model = model
 
     def infer(self,test_loader):
         self.model.eval()
         with torch.no_grad():
-            image_tensor = next(iter(test_loader))
+            image_tensor, _ = next(iter(test_loader))
             out = self.model(image_tensor)
             probs = nn.functional.softmax(out)
             prob, pred = probs.max(1)
