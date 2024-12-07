@@ -3,7 +3,8 @@ import numpy as np
 from PIL import Image
 import streamlit as st
 
-from ml.ml_projects.mnist_classification.incremental_inference import run_for_uploaded_img
+from single_inference import run as run_for_uploaded_img
+from retraining import run as retrain_for_single_image
 
 if __name__=='__main__':
     st.title("Digit Classifier")
@@ -11,17 +12,18 @@ if __name__=='__main__':
 
     uploaded_file = st.sidebar.file_uploader("Upload an image file", type=["png", "jpg", "jpeg"])
     if uploaded_file is not None:
-        # file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
-        # image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
-        pil_img = Image.open(uploaded_file).convert('L')
-        print(pil_img.size)
+        file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
+        image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
 
-        st.image(pil_img,width=400, caption="Uploaded Image", use_column_width=False)
-        confidence, pred_label = run_for_uploaded_img(pil_img=pil_img)
+        st.image(image,width=400, caption="Uploaded Image", use_column_width=False)
+        confidence, pred_label = run_for_uploaded_img(img=image)
         st.write(f"Predicted Digit: {pred_label.item()}")
         st.write(f"Confidence: {int(100*confidence.item())}%")
 
-        st.write("If the prediction is incorrect, please provide the correct input")
-        st.number_input('Correct Label (0-9)',max_value=9,min_value=0,step=1,format="%d")
+        st.title("Retraining")
+        st.write("If the above prediction is incorrect, please provide the correct input")
+        correct_label = st.number_input('Correct Label (0-9)',max_value=9,min_value=0,step=1,format="%d")
+        print(correct_label,pred_label)
         if st.button("Use for Retraining"):
-            pass
+            if correct_label != pred_label:
+                retrain_for_single_image(img=image,label=correct_label)
