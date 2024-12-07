@@ -7,6 +7,7 @@ from constants import DataConstants, LeNetModelParams
 class LeNet(nn.Module):
     def __init__(self):
         super(LeNet,self).__init__()
+        self.model_name = 'lenet'
         self.image_pixels = DataConstants.IMAGE_SIZE[0]*DataConstants.IMAGE_SIZE[1]
         self.conv1 = nn.Conv2d(
             in_channels=1,

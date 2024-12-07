@@ -6,6 +6,7 @@ from constants import DataConstants, MLPModelParams
 class MLP(nn.Module):
     def __init__(self):
         super(MLP,self).__init__()
+        self.model_name = 'mlp'
         self.image_pixels = DataConstants.IMAGE_SIZE[0]*DataConstants.IMAGE_SIZE[1]
         self.fc1 = nn.Linear(self.image_pixels, MLPModelParams.NEURONS_FC1)
         self.fc2 = nn.Linear(MLPModelParams.NEURONS_FC1, DataConstants.OUTPUT_CLASSES)
