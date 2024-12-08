@@ -21,18 +21,6 @@ class ModelCheckpoint:
         torch.save(checkpoint,checkpoint_path)
 
     @staticmethod
-    def load(
-            checkpoint_path:str, 
-            model:nn.Module, 
-            optimizer:torch.optim) -> nn.Module:
-        last_epoch = 0
-        if checkpoint_path:
-            checkpoint_path = Path(checkpoint_path) 
-            if checkpoint_path.exists():
-                checkpoint = torch.load(checkpoint_path, weights_only=True)
-                if 'epoch' in checkpoint.keys():
-                    last_epoch = checkpoint['epoch']
-                    model.load_state_dict(checkpoint['model_state'])
-                    optimizer.load_state_dict(checkpoint['optimizer_state'])
-            return last_epoch, model, optimizer
-        return last_epoch, model, optimizer
+    def load(checkpoint_path):
+        if checkpoint_path and Path(checkpoint_path).exists():
+            return torch.load(checkpoint_path, weights_only=True)
