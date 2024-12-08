@@ -10,24 +10,15 @@ from prep.single_data_prep import SingleDataPreparation
 from factory.model_factory import ModelFactory
 from factory.training_factory import TrainingFactory
 
-def run(img: Union[str,Path,np.ndarray],
-        label: str='',
-        model_name:str='lenet'):
+def run(img: Union[str,Path,np.ndarray],label: int,model_name:str='lenet'):
     data_prep = SingleDataPreparation(img=img,label=label)
     train_loader = data_prep.prepare()
-    print(next(iter(train_loader)))
 
     model_factory = ModelFactory()
     model = model_factory.select(model_name)
-    # checkpoint = torch.load(PathConstants.MODEL_PATH(model_name), weights_only=True)
-    # model.load_state_dict(checkpoint['model_state'])
 
-    training = TrainingFactory.get(
-        strategy='single',
-        model=model,
-        train_loader=train_loader,
-        checkpoint_path=PathConstants.MODEL_PATH(model_name))
-    training.train()
+    training = TrainingFactory.get(strategy='single',model=model)
+    training.train(train_loader=train_loader)
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()

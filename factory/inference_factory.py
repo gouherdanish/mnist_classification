@@ -1,9 +1,11 @@
+from pathlib import Path
 import cv2
 import torch 
 import torch.nn as nn
 from abc import ABC, abstractmethod
 
 from utils import Utils
+from constants import PathConstants
 
 class InferenceFactory:
     registry = {}
@@ -21,15 +23,20 @@ class InferenceFactory:
     
 
 class InferenceStrategy(ABC):
+    def __init__(self,model):
+        self.model = model
+        self.checkpoint_path = PathConstants.MODEL_PATH(model.model_name)
+        assert Path(self.checkpoint_path).exists(), f"Model Path Not Found: {self.checkpoint_path}"
+        self.checkpoint = torch.load(self.checkpoint_path, weights_only=True)
+        self.model.load_state_dict(self.checkpoint['model_state'])
+        print(self.checkpoint['epoch'])
+
     @abstractmethod
-    def infer(self):
+    def infer(self)->dict:
         pass
 
 @InferenceFactory.register('batch')
 class BatchInferenceStrategy(InferenceStrategy):
-    def __init__(self,model):
-        self.model = model
-
     def _infer_batch(self, X, y):
         self.model.eval()
         with torch.no_grad():
@@ -49,14 +56,14 @@ class BatchInferenceStrategy(InferenceStrategy):
     
 @InferenceFactory.register('single')
 class SingleInferenceStrategy(InferenceStrategy):
-    def __init__(self,model):
-        self.model = model
-
-    def infer(self,test_loader):
+    def infer(self,test_loader)->dict:
+        res = {}
         self.model.eval()
         with torch.no_grad():
             image_tensor, _ = next(iter(test_loader))
             out = self.model(image_tensor)
             probs = nn.functional.softmax(out)
             prob, pred = probs.max(1)
-        return prob, pred
+            res['confidence'] = prob
+            res['pred_label'] = pred
+        return res
