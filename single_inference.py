@@ -13,25 +13,16 @@ from utils import Utils
 def run(img,model_name='lenet'):
     inference_strategy = 'single'
 
-    checkpoint_path = PathConstants.MODEL_PATH(model_name)
-    assert Path(checkpoint_path).exists(), f"Path Not Found: {checkpoint_path}"
-    checkpoint = torch.load(checkpoint_path, weights_only=True)
-
     data_prep = SingleDataPreparation(img=img)
     test_loader = data_prep.prepare()
 
     model_factory = ModelFactory()
     model = model_factory.select(model_name)
-    model.load_state_dict(checkpoint['model_state'])
 
-    evaluator = ModelEvaluator()
-    eval_result = evaluator.evaluate(model)
-    print(eval_result)
-
-    inferencing = InferenceFactory.get(inference_strategy,model=model)
-    confidence, pred_label = inferencing.infer(test_loader=test_loader)
-    print(confidence, pred_label)
-    return confidence, pred_label
+    inferencing = InferenceFactory.get(strategy=inference_strategy,model=model)
+    res = inferencing.infer(test_loader=test_loader)
+    print(res)
+    return res['confidence'], res['pred_label']
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
