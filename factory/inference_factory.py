@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 from abc import ABC, abstractmethod
 
+from checkpoint.model_checkpoint import ModelCheckpoint
 from utils import Utils
 from constants import PathConstants
 
@@ -27,7 +28,7 @@ class InferenceStrategy(ABC):
         self.model = model
         self.checkpoint_path = PathConstants.MODEL_PATH(model.model_name)
         assert Path(self.checkpoint_path).exists(), f"Model Path Not Found: {self.checkpoint_path}"
-        self.checkpoint = torch.load(self.checkpoint_path, weights_only=True)
+        self.checkpoint = ModelCheckpoint.load(checkpoint_path=self.checkpoint_path)
         self.model.load_state_dict(self.checkpoint['model_state'])
         print(self.checkpoint['epoch'])
 
