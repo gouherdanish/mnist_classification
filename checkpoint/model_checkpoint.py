@@ -6,7 +6,6 @@ from typing import Union
 from constants import PathConstants
 
 class ModelCheckpoint:
-
     @staticmethod
     def save(
             epoch:int,
@@ -21,6 +20,6 @@ class ModelCheckpoint:
         torch.save(checkpoint,checkpoint_path)
 
     @staticmethod
-    def load(checkpoint_path):
+    def load(checkpoint_path:str):
         if checkpoint_path and Path(checkpoint_path).exists():
             return torch.load(checkpoint_path, weights_only=True)
