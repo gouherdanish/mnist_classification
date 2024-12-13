@@ -75,54 +75,20 @@ class BatchTraining(ModelTraining):
                 total_loss += loss
                 count+=len(y)
         return total_loss.item()/count, acc.item()/count
-
-    # @Utils.timeit
-    # def train(self,epochs):
-    #     res = {
-    #         'train_loss':[],
-    #         'val_loss':[],
-    #         'train_acc':[],
-    #         'val_acc':[]
-    #     }
-    #     last_epoch,model,optimizer = ModelCheckpoint.load(
-    #         checkpoint_path=self.checkpoint_path,
-    #         model=self.model,
-    #         optimizer=self.optimizer
-    #     )
-    #     for epoch in range(last_epoch+1,epochs+1):
-    #         tl,ta = self.train_loop(model,optimizer)
-    #         res['train_loss'].append(tl)
-    #         res['train_acc'].append(ta)
-    #         if self.with_validation:
-    #             vl,va = self.val_loop(model)
-    #             res['val_loss'].append(vl)
-    #             res['val_acc'].append(va)
-    #         if epoch == 1 or epoch == epochs or epoch%5 == 0:
-    #             if self.with_validation:
-    #                 print(f"Epoch {epoch:02}, Train acc={ta:.3f}, Val acc={va:.3f}, Train loss={tl:.3f}, Val loss={vl:.3f}")
-    #             else:
-    #                 print(f"Epoch {epoch:02}, Train acc={ta:.3f}, Train loss={tl:.3f}")
-    #             ModelCheckpoint.save(
-    #                 epoch=epoch,
-    #                 model=model,
-    #                 optimizer=optimizer,
-    #                 checkpoint_path=self.checkpoint_path
-    #             )
-    #     return res
     
     @Utils.timeit
     def train(
             self,
             train_loader,
-            val_loader,
-            epochs):
+            val_loader=None,
+            epochs=10):
         res = {
             'train_loss':[],
             'val_loss':[],
             'train_acc':[],
             'val_acc':[]
         }
-        self.with_validation = len(val_loader) != 0
+        self.with_validation = val_loader and len(val_loader) != 0
         for epoch in range(self.last_epoch+1,epochs+1):
             tl,ta = self.train_loop(train_loader)
             res['train_loss'].append(tl)
@@ -156,22 +122,7 @@ class SingleTraining(ModelTraining):
         loss.backward()
         self.optimizer.step()
 
-    # def train(self):
-    #     print(self.checkpoint_path)
-    #     last_epoch,model,optimizer = ModelCheckpoint.load(
-    #         checkpoint_path=self.checkpoint_path,
-    #         model=self.model,
-    #         optimizer=self.optimizer
-    #     )
-    #     print(f'LAST EPOCH : {last_epoch}')
-    #     self._train_loop(model,optimizer)
-    #     ModelCheckpoint.save(
-    #         epoch=last_epoch+1,
-    #         model=model,
-    #         optimizer=optimizer,
-    #         checkpoint_path=self.checkpoint_path
-    #     )
-
+    @Utils.timeit
     def train(self,train_loader):
         print(f'LAST EPOCH : {self.last_epoch}')
         self._train_loop(train_loader)
