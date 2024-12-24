@@ -26,6 +26,11 @@ class SingleDataPreparation(DataPreparation):
         ])
 
     def _load_data(self):
+        """
+        Function to load data into a PyTorch Dataset object
+        - if path string is provided, it uses cv2 to read the image from the path into a numpy array
+        - if numpy array is provided directly, it is used as is
+        """
         if isinstance(self.img,str):
             self.img = Path(self.img)
         if isinstance(self.img,Path):
