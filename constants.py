@@ -14,7 +14,7 @@ class PathConstants:
 
 class HyperParams:
     LEARNING_RATE = 0.001           # Constant Learning rate
-    BATCH_SIZE = 128                # One batch has 128 images
+    BATCH_SIZE = 100                # One batch has 128 images
 
 class MLPModelParams:
     NEURONS_FC1 = 512               # Only one hidden layer of 512 neurons

@@ -82,6 +82,7 @@ class BatchTraining(ModelTraining):
             train_loader,
             val_loader=None,
             epochs=10):
+        assert epochs > self.last_epoch, f"ERROR: Model is already trained till Epoch {self.last_epoch}"
         res = {
             'train_loss':[],
             'val_loss':[],
