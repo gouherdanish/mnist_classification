@@ -1,11 +1,10 @@
-from pathlib import Path
 import argparse
-import torch
 
 from factory.model_factory import ModelFactory
 from factory.inference_factory import InferenceFactory
 from prep.batch_data_prep_test import BatchTestDataPreparation
 from eval.evaluate import ModelEvaluator
+from constants import DataConstants
 from utils import Utils
 
 @Utils.timeit
@@ -20,7 +19,7 @@ def run(args):
     model = model_factory.select(model_name)
 
     evaluator = ModelEvaluator()
-    eval_result = evaluator.evaluate(model)
+    eval_result = evaluator.evaluate(model,input_size=(DataConstants.IN_CHANNELS,*DataConstants.IMAGE_SIZE))
     print(eval_result)
 
     inferencing = InferenceFactory.get(strategy=inference_strategy,model=model)
