@@ -30,7 +30,7 @@ class InferenceStrategy(ABC):
         assert Path(self.checkpoint_path).exists(), f"Model Path Not Found: {self.checkpoint_path}"
         self.checkpoint = ModelCheckpoint.load(checkpoint_path=self.checkpoint_path)
         self.model.load_state_dict(self.checkpoint['model_state'])
-        print(self.checkpoint['epoch'])
+        # print(f"Last Epoch : {self.checkpoint['epoch']}")
 
     @abstractmethod
     def infer(self)->dict:
