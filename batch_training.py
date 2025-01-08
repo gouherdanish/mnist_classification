@@ -1,12 +1,10 @@
-from pathlib import Path
 import argparse
-import torch
 
-from constants import PathConstants
 from prep.batch_data_prep_training import BatchTrainingDataPreparation
 from factory.model_factory import ModelFactory
 from factory.training_factory import TrainingFactory
-from checkpoint.model_checkpoint import ModelCheckpoint
+from eval.evaluate import ModelEvaluator
+from constants import DataConstants
 
 
 def run(args):
@@ -21,7 +19,6 @@ def run(args):
 
     training = TrainingFactory.get(strategy='batch',model=model)
     hist = training.train(train_loader=train_loader,val_loader=val_loader,epochs=epochs)
-    # print(hist)
     train_acc = 100*sum(hist['train_acc'])/len(hist['train_acc'])
     val_acc = 100*sum(hist['val_acc'])/len(hist['val_acc'])
     print(f"Train Accuracy : {train_acc:.1f}%")
