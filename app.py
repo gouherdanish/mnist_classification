@@ -15,7 +15,7 @@ if __name__=='__main__':
         file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
         image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
 
-        st.image(image,width=400, caption="Uploaded Image", use_column_width=False)
+        st.image(image,width=400, caption="Uploaded Image", use_container_width=False)
         confidence, pred_label = run_for_uploaded_img(img=image)
         st.write(f"Predicted Digit: {pred_label.item()}")
         st.write(f"Confidence: {int(100*confidence.item())}%")
