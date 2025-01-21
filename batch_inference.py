@@ -18,10 +18,6 @@ def run(args):
     model_factory = ModelFactory()
     model = model_factory.select(model_name)
 
-    evaluator = ModelEvaluator()
-    eval_result = evaluator.evaluate(model,input_size=(DataConstants.IN_CHANNELS,*DataConstants.IMAGE_SIZE))
-    print(eval_result)
-
     inferencing = InferenceFactory.get(strategy=inference_strategy,model=model)
     hist = inferencing.infer(test_loader=test_loader)
     # print(hist)
