@@ -1,4 +1,8 @@
+import time
+import torch
 import torch.nn as nn
+
+from constants import DataConstants
 
 class ModelEvaluator:
     @staticmethod
@@ -61,11 +65,37 @@ class ModelEvaluator:
                 prev_size = (layer.out_features,)
         return total_flops
 
+    @staticmethod
+    def inference(model,dataloader):
+        def get_energy(runtime):
+            factor = 713        # For India, Units: gCO2eq/kWh
+            ram_power = 3       # 3 Watts for 8 GB https://mlco2.github.io/codecarbon/methodology.html#
+            cpu_power = 13      # 13 Watts for MAC M1 https://versus.com/en/apple-m1/cpu-tdp
+            gpu_power = 0
+            return (ram_power + cpu_power + gpu_power) * runtime * factor / 1000
+
+        latency_list, acc_list, energy_list = [], [], []
+        for X,y in dataloader:
+            start_time = time.time()
+            model.eval()
+            with torch.no_grad():
+                out = model(X)
+                pred = out.argmax(dim=1)
+                acc = (y==pred).sum()
+            end_time = time.time()
+            runtime = end_time - start_time
+            latency = runtime / len(y)
+            latency_list.append(latency)
+            energy_list.append(get_energy(latency))
+            acc_list.append(acc.item() / len(y))
+        return sum(latency_list) / len(latency_list), sum(acc_list) / len(acc_list), sum(energy_list) / len(energy_list)
+
     def evaluate(
             self,
             model:nn.Module,
-            input_size:tuple):
+            dataloader:torch.utils.data.DataLoader):
         result = {}
-        result['param_count'] = self.count_params(model)
-        result['flops'] = self.count_flops(model,input_size=input_size)
+        result['params'] = self.count_params(model)
+        result['flops'] = self.count_flops(model,input_size=(DataConstants.IN_CHANNELS,*DataConstants.IMAGE_SIZE))
+        result['latency'], result['accuracy'], result['gCO2'] = self.inference(model,dataloader)
         return result

@@ -18,11 +18,9 @@ def run(args):
     model_factory = ModelFactory()
     model = model_factory.select(model_name)
 
-    inferencing = InferenceFactory.get(strategy=inference_strategy,model=model)
-    hist = inferencing.infer(test_loader=test_loader)
-    # print(hist)
-    test_acc = 100*sum(hist['test_acc'])/len(hist['test_acc'])
-    print(f"Test Accuracy : {test_acc:.1f}%")
+    evaluator = ModelEvaluator()
+    eval_result = evaluator.evaluate(model,dataloader=test_loader)
+    print(eval_result)
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
