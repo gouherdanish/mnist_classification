@@ -10,7 +10,6 @@ from utils import Utils
 @Utils.timeit
 def run(args):
     model_name = args.model_name
-    inference_strategy = 'batch'
 
     data_prep = BatchTestDataPreparation()
     test_loader = data_prep.prepare()
