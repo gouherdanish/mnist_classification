@@ -1,7 +1,7 @@
 import os
 
 class DataConstants:
-    IMAGE_SIZE = (28,28)            # size of input image
+    IMAGE_SIZE = (20,20)            # size of input image
     IN_CHANNELS = 1                 # grayscale
     VALIDATION_SPLIT_FRAC = 0.1     # 10% validation set out of training set
     OUTPUT_CLASSES = 10             # Labels 0 to 9
