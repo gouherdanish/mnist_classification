@@ -1,11 +1,16 @@
-import time
+import time, os
 import torch
 import torch.nn as nn
 
-from constants import DataConstants
+from constants import DataConstants, PathConstants
 from factory.inference_factory import InferenceFactory
 
 class ModelEvaluator:
+    @staticmethod
+    def model_size(model):
+        size_bytes = os.path.getsize(PathConstants.MODEL_PATH(model.model_name))
+        return f"{size_bytes / 1e6:.1f} MB"
+
     @staticmethod
     def count_params(model):
         return sum([p.numel() for p in model.parameters() if p.requires_grad])
@@ -86,13 +91,14 @@ class ModelEvaluator:
             latency_list.append(latency)
             energy_list.append(self.compute_energy(latency))
             acc_list.append(batch_acc)
-        return f"{(1e6 * sum(latency_list) / len(latency_list)):.1f} \u03BCs", f"{(100* sum(acc_list) / len(acc_list)):.1f}%", f"{1e6* (sum(energy_list) / len(energy_list))} \u03BCgCO2eq"
+        return f"{(1e6 * sum(latency_list) / len(latency_list)):.1f} \u03BCs", f"{(100* sum(acc_list) / len(acc_list)):.1f}%", f"{(1e6* sum(energy_list) / len(energy_list)):.1f} \u03BCgCO2eq"
 
     def evaluate(
             self,
             model:nn.Module,
             dataloader:torch.utils.data.DataLoader):
         result = {}
+        result['size'] = self.model_size(model)
         result['params'] = self.count_params(model)
         result['flops'] = self.count_flops(model,input_size=(DataConstants.IN_CHANNELS,*DataConstants.IMAGE_SIZE))
         result['latency'], result['accuracy'], result['CO2eq'] = self.inference(model,dataloader)
