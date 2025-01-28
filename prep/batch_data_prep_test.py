@@ -10,7 +10,7 @@ class BatchTestDataPreparation(DataPreparation):
         self.transform = torchvision.transforms.Compose([
             torchvision.transforms.ToTensor(),
             torchvision.transforms.Normalize((0.5),(0.5)),
-            torchvision.transforms.CenterCrop(20)
+            # torchvision.transforms.CenterCrop(20)
         ])
         
     def _load_data(self):
