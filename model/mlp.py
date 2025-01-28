@@ -8,8 +8,8 @@ class MLP(nn.Module):
         super(MLP,self).__init__()
         self.model_name = 'mlp'
         self.image_pixels = DataConstants.IMAGE_SIZE[0]*DataConstants.IMAGE_SIZE[1]
-        self.fc1 = nn.Linear(self.image_pixels, 1024)
-        self.fc2 = nn.Linear(1024, DataConstants.OUTPUT_CLASSES)
+        self.fc1 = nn.Linear(self.image_pixels, MLPModelParams.NEURONS_FC1)
+        self.fc2 = nn.Linear(MLPModelParams.NEURONS_FC1, DataConstants.OUTPUT_CLASSES)
     
     def forward(self, x):
         x = x.view(-1,self.image_pixels)
@@ -21,9 +21,9 @@ class MLP(nn.Module):
 #         super(MLP,self).__init__()
 #         self.model_name = 'mlp'
 #         self.image_pixels = DataConstants.IMAGE_SIZE[0]*DataConstants.IMAGE_SIZE[1]
-#         self.fc1 = nn.Linear(self.image_pixels, 512)
-#         self.fc2 = nn.Linear(512, 512)
-#         self.fc3 = nn.Linear(512, DataConstants.OUTPUT_CLASSES)
+#         self.fc1 = nn.Linear(self.image_pixels, MLPModelParams.NEURONS_FC1)
+#         self.fc2 = nn.Linear(MLPModelParams.NEURONS_FC1, MLPModelParams.NEURONS_FC2)
+#         self.fc3 = nn.Linear(MLPModelParams.NEURONS_FC2, DataConstants.OUTPUT_CLASSES)
     
 #     def forward(self, x):
 #         x = x.view(-1,self.image_pixels)
@@ -36,10 +36,10 @@ class MLP(nn.Module):
 #         super(MLP,self).__init__()
 #         self.model_name = 'mlp'
 #         self.image_pixels = DataConstants.IMAGE_SIZE[0]*DataConstants.IMAGE_SIZE[1]
-#         self.fc1 = nn.Linear(self.image_pixels, 512)
-#         self.fc2 = nn.Linear(512, 512)
-#         self.fc3 = nn.Linear(512, 512)
-#         self.fc4 = nn.Linear(512, DataConstants.OUTPUT_CLASSES)
+#         self.fc1 = nn.Linear(self.image_pixels, MLPModelParams.NEURONS_FC1)
+#         self.fc2 = nn.Linear(MLPModelParams.NEURONS_FC1), MLPModelParams.NEURONS_FC2)
+#         self.fc3 = nn.Linear(MLPModelParams.NEURONS_FC2), MLPModelParams.NEURONS_FC3)
+#         self.fc4 = nn.Linear(MLPModelParams.NEURONS_FC3), DataConstants.OUTPUT_CLASSES)
     
 #     def forward(self, x):
 #         x = x.view(-1,self.image_pixels)
