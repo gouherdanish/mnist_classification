@@ -1,0 +1,4 @@
+#,Model,Arch,NumEpochs,TrainingTime,TrainingTimePerEpoch,InferenceLatency,Accuracy,Flops,Parameters
+1,MLP,Input(784)-Hidden(512)-Output(10),2,4.52,2.26,0.0057,0.960,813056,407050
+2,MLP,Input(784)-Hidden(512)-Hidden(512)-Output(10),2,4.83,2.41,0.0061,0.963,1337344,669706
+3,MLP,Input(784)-Hidden(512)-Hidden(512)-Hidden(512)-Output(10),2,5.3,2.65,0.0062,0.964,1861632,932362
