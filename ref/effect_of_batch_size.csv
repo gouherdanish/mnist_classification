@@ -1,0 +1,9 @@
+#,Model,Arch,NumEpochs,BatchSize,ModelSize,Parameters,Flops,TrainingTimePerEpoch,InferenceLatency,Accuracy,EnergyConsumption
+1,MLP-1,Input(784)-Hidden(1024)-Output(10),2,1,9.8,814090,1626112,228.3,57.4,93.0,654.5
+2,MLP-1,Input(784)-Hidden(1024)-Output(10),2,16,9.8,814090,1626112,19.2,23.8,96.7,271.6
+3,MLP-1,Input(784)-Hidden(1024)-Output(10),2,64,9.8,814090,1626112,8.57,5.1,96.4,58.2
+4,MLP-1,Input(784)-Hidden(1024)-Output(10),2,128,9.8,814090,1626112,6.96,4.3,96.4,49.0
+5,MLP-2,Input(400)-Hidden(1024)-Hidden(1024)-Output(10),2,1,17.7,1470474,2936832,408.1,88.8,93.6,1012.6
+6,MLP-2,Input(400)-Hidden(1024)-Hidden(1024)-Output(10),2,16,17.7,1470474,2936832,33.5,32.0,95.3,364.8
+7,MLP-2,Input(400)-Hidden(1024)-Hidden(1024)-Output(10),2,64,17.7,1470474,2936832,13.2,10.3,97.2,117.2
+8,MLP-2,Input(400)-Hidden(1024)-Hidden(1024)-Output(10),2,128,17.7,1470474,2936832,10.2,9.0,96.6,102.6
