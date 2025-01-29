@@ -72,15 +72,23 @@ class ModelEvaluator:
         return total_flops
 
     @staticmethod
-    def compute_energy(runtime):
-        factor = 713        # For India, Units: gCO2eq/kWh
+    def compute_carbon_emission(runtime):
+        """
+        Calculates the carbon footprint of one inference in gCO2eq
+
+        Args:
+            runtime: time it takes to run one inference in hours
+        """
+        factor = 713        # For India, Units: gCO2eq/kWh, https://ourworldindata.org/grapher/carbon-intensity-electricity?tab=table#explore-the-data
         ram_power = 3       # 3 Watts for 8 GB https://mlco2.github.io/codecarbon/methodology.html#
         cpu_power = 13      # 13 Watts for MAC M1 https://versus.com/en/apple-m1/cpu-tdp
         gpu_power = 0
-        return (ram_power + cpu_power + gpu_power) * runtime * factor / 1000
+        energy_consumed = (ram_power + cpu_power + gpu_power) * runtime / 1000 # in kWh
+        carbon_emission = factor * energy_consumed # in gCO2eq
+        return carbon_emission
         
     def inference(self,model,dataloader):
-        latency_list, acc_list, energy_list = [], [], []
+        latency_list, acc_list, carbon_emission_list = [], [], []
         inferencing = InferenceFactory.get(strategy='batch',model=model)
         for batch_X, batch_y in dataloader:
             start_time = time.time()
@@ -89,7 +97,7 @@ class ModelEvaluator:
             runtime = end_time - start_time
             latency = runtime / len(batch_y)
             latency_list.append(latency)
-            energy_list.append(self.compute_energy(latency))
+            carbon_emission_list.append(self.compute_carbon_emission(latency/3600))
             acc_list.append(batch_acc)
         return f"{(1e6 * sum(latency_list) / len(latency_list)):.1f} \u03BCs", f"{(100* sum(acc_list) / len(acc_list)):.1f}%", f"{(1e6* sum(energy_list) / len(energy_list)):.1f} \u03BCgCO2eq"
 
