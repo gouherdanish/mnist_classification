@@ -4,24 +4,24 @@
 
 ### Landing Page
 
-[Landing Page](./images/landing_page.png)
+![Landing Page](./images/landing_page.png)
 
 ### Uploading an image
 
-[Upload](./images/upload.png)
+![Upload](./images/upload.png)
 
 ### Prediction
 
-[Prediction](./images/pred.png)
+![Prediction](./images/pred.png)
 
 ### Misclassification
 
-[Misclassification](./images/pred_wrong_7a.png)
+![Misclassification](./images/pred_wrong_7a.png)
 
 ### Retraining
 
-[Retraining](./images/retrain_7a.png)
+![Retraining](./images/retrain_7a.png)
 
 ### Check
 
-[Check](./images/pred_wrong_7a_1.png)
+![Check](./images/pred_wrong_7a_1.png)
