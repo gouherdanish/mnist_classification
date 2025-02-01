@@ -4,24 +4,24 @@
 
 ### Landing Page
 
-![Landing Page](./images/landing_page.png)
+![Landing Page](https://raw.githubusercontent.com/gouherdanish/mnist_classification/main/images/landing_page.png)
 
 ### Uploading an image
 
-![Upload](./images/upload.png)
+![Upload](https://raw.githubusercontent.com/gouherdanish/mnist_classification/main/images/upload.png)
 
 ### Prediction
 
-![Prediction](./images/pred.png)
+![Prediction](https://raw.githubusercontent.com/gouherdanish/mnist_classification/main/images/pred.png)
 
 ### Misclassification
 
-![Misclassification](./images/pred_wrong_7a.png)
+![Misclassification](https://raw.githubusercontent.com/gouherdanish/mnist_classification/main/images/pred_wrong_7a.png)
 
 ### Retraining
 
-![Retraining](./images/retrain_7a.png)
+![Retraining](https://raw.githubusercontent.com/gouherdanish/mnist_classification/main/images/retrain_7a.png)
 
 ### Check
 
-![Check](./images/pred_wrong_7a_1.png)
+![Check](https://raw.githubusercontent.com/gouherdanish/mnist_classification/main/images/pred_wrong_7a_1.png)
