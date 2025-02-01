@@ -21,7 +21,3 @@
 ### Retraining
 
 ![Retraining](https://raw.githubusercontent.com/gouherdanish/mnist_classification/main/images/retrain_7a.png)
-
-### Check
-
-![Check](https://raw.githubusercontent.com/gouherdanish/mnist_classification/main/images/pred_wrong_7a_1.png)
