@@ -4,24 +4,24 @@
 
 ### Landing Page
 
-<img src="{{site.url}}/images/landing_page.png">
+[Landing Page](./images/landing_page.png)
 
 ### Uploading an image
 
-<img src="{{site.url}}/images/upload.png">
+[Upload](./images/upload.png)
 
 ### Prediction
 
-<img src="{{site.url}}/images/pred.png">
+[Prediction](./images/pred.png)
 
 ### Misclassification
 
-<img src="{{site.url}}/images/pred_wrong_7a.png">
+[Misclassification](./images/pred_wrong_7a.png)
 
 ### Retraining
 
-<img src="{{site.url}}/images/retrain_7a.png">
+[Retraining](./images/retrain_7a.png)
 
 ### Check
 
-<img src="{{site.url}}/images/pred_wrong_7a_1.png">
+[Check](./images/pred_wrong_7a_1.png)
