@@ -1,0 +1,3 @@
+#,Model,Arch,NumEpochs,BatchSize,ModelSize,Parameters,Flops,TrainingTimePerEpoch,InferenceLatency,Accuracy,Carbon
+1,MLP-5,Input(784)-Hidden(512)-Hidden(256)-Hidden(120)-Hidden(84)-Output(10),2,64,6.9,575102,1148240,4.5,5.9,95.7,18.3
+2,LeNet-5,Input(784)-Conv(6*5*5)-AvgPooling-Conv(16*5*5)-AvgPooling-Hidden(120)-Hidden(84)-Output(10),2,64,0.5,44426,2176080,6.87,21.8,97.8,69.0
