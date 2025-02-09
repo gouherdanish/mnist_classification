@@ -99,7 +99,8 @@ class ModelEvaluator:
             latency_list.append(latency)
             carbon_emission_list.append(self.compute_carbon_emission(latency/3600))
             acc_list.append(batch_acc)
-        return f"{(1e6 * sum(latency_list) / len(latency_list)):.1f} \u03BCs", f"{(100* sum(acc_list) / len(acc_list)):.1f}%", f"{(1e6* sum(energy_list) / len(energy_list)):.1f} \u03BCgCO2eq"
+        # print(carbon_emission_list)
+        return f"{(1e6 * sum(latency_list) / len(latency_list)):.1f} \u03BCs", f"{(100* sum(acc_list) / len(acc_list)):.1f}%", f"{(1e9* sum(carbon_emission_list) / len(carbon_emission_list)):.1f} ngCO2eq"
 
     def evaluate(
             self,
